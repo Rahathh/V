@@ -35,25 +35,6 @@ const messages = [
 
 let messageIndex = 0;
 
-// Move the No button to a random position
-function moveNoButton() {
-    const noButton = document.querySelector('.no-button');
-    const container = document.querySelector('.container');
-    
-    const containerRect = container.getBoundingClientRect();
-    const buttonRect = noButton.getBoundingClientRect();
-    
-    const maxX = containerRect.width - buttonRect.width - 20;
-    const maxY = containerRect.height - buttonRect.height - 20;
-    
-    const randomX = Math.floor(Math.random() * maxX);
-    const randomY = Math.floor(Math.random() * maxY);
-    
-    noButton.style.position = 'absolute';
-    noButton.style.left = `${randomX}px`;
-    noButton.style.top = `${randomY}px`;
-}
-
 function handleNoClick() {
     const noButton = document.querySelector('.no-button');
     const yesButton = document.querySelector('.yes-button');
@@ -63,25 +44,8 @@ function handleNoClick() {
     
     const currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
     yesButton.style.fontSize = `${currentSize * 1.5}px`;
-    
-    // Move button after changing text
-    moveNoButton();
 }
 
 function handleYesClick() {
     window.location.href = "yes_page.html";
 }
-
-// Add mobile support when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    const noButton = document.querySelector('.no-button');
-    
-    // Move button on hover (desktop)
-    noButton.addEventListener('mouseenter', moveNoButton);
-    
-    // Move button on touch start (mobile) - happens BEFORE click
-    noButton.addEventListener('touchstart', function(e) {
-        e.preventDefault();
-        moveNoButton();
-    });
-});
