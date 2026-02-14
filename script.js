@@ -1,4 +1,4 @@
-(async function checkForUpdates() {
+\(async function checkForUpdates() {
     const currentVersion = "1.0";
     const versionUrl = "https://raw.githubusercontent.com/rahathh/Will-you-be-my-Valentine-/main/version.json"; 
     try {
@@ -56,7 +56,11 @@ function handleNoHover() {
     noButton.style.top = randomY + 'px';
 }
 
-function handleNoClick() {
+function handleNoClick(event) {
+    // Prevent default behavior
+    event.preventDefault();
+    event.stopPropagation();
+    
     const noButton = document.querySelector('.no-button');
     const yesButton = document.querySelector('.yes-button');
     
@@ -84,8 +88,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // For desktop - move on hover
     noButton.addEventListener('mouseenter', handleNoHover);
     
-    // For both desktop and mobile - move on click
+    // For both desktop and mobile - move on click/touch
     noButton.addEventListener('click', handleNoClick);
+    noButton.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        handleNoClick(e);
+    });
     
     // Yes button click
     yesButton.addEventListener('click', handleYesClick);
