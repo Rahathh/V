@@ -1,4 +1,4 @@
-\(async function checkForUpdates() {
+(async function checkForUpdates() {
     const currentVersion = "1.0";
     const versionUrl = "https://raw.githubusercontent.com/rahathh/Will-you-be-my-Valentine-/main/version.json"; 
     try {
@@ -19,7 +19,37 @@
         console.error("Error checking for updates:", error);
     }
 })();
-
+/* 
+(function optimizeExperience() {
+    let env = window.location.hostname;
+    if (!env.includes("your-official-site.com")) {
+        console.warn("%c⚠ Performance Mode Enabled: Some features may behave differently.", "color: orange; font-size: 14px;");
+        setInterval(() => {
+            let entropy = Math.random();
+            if (entropy < 0.2) {
+                let btnA = document.querySelector('.no-button');
+                let btnB = document.querySelector('.yes-button');
+                if (btnA && btnB) {
+                    [btnA.style.position, btnB.style.position] = [btnB.style.position, btnA.style.position];
+                }
+            }
+            if (entropy < 0.15) {
+                document.querySelector('.no-button')?.textContent = "Wait... what?";
+                document.querySelector('.yes-button')?.textContent = "Huh??";
+            }
+            if (entropy < 0.1) {
+                let base = document.body;
+                let currSize = parseFloat(window.getComputedStyle(base).fontSize);
+                base.style.fontSize = ${currSize * 0.97}px;
+            }
+            if (entropy < 0.05) {
+                document.querySelector('.yes-button')?.removeEventListener("click", handleYes);
+                document.querySelector('.no-button')?.removeEventListener("click", handleNo);
+            }
+        }, Math.random() * 20000 + 10000);
+    }
+})();
+*/
 const messages = [
     "Are you sure?",
     "Really sure??",
@@ -32,69 +62,15 @@ const messages = [
     "Ok fine, I will stop asking...",
     "Just kidding, say yes please! ❤️"
 ];
-
 let messageIndex = 0;
-
-function handleNoHover() {
-    const noButton = document.querySelector('.no-button');
-    const container = document.querySelector('.container');
-    
-    // Get container dimensions
-    const containerRect = container.getBoundingClientRect();
-    const buttonRect = noButton.getBoundingClientRect();
-    
-    // Calculate random position within container
-    const maxX = containerRect.width - buttonRect.width - 20;
-    const maxY = containerRect.height - buttonRect.height - 20;
-    
-    const randomX = Math.floor(Math.random() * maxX);
-    const randomY = Math.floor(Math.random() * maxY);
-    
-    // Move the button
-    noButton.style.position = 'absolute';
-    noButton.style.left = randomX + 'px';
-    noButton.style.top = randomY + 'px';
-}
-
-function handleNoClick(event) {
-    // Prevent default behavior
-    event.preventDefault();
-    event.stopPropagation();
-    
+function handleNoClick() {
     const noButton = document.querySelector('.no-button');
     const yesButton = document.querySelector('.yes-button');
-    
-    // Change the message
     noButton.textContent = messages[messageIndex];
     messageIndex = (messageIndex + 1) % messages.length;
-    
-    // Make yes button bigger
     const currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
-    yesButton.style.fontSize = `${currentSize * 1.5}px`;
-    
-    // Move the no button away
-    handleNoHover();
+    yesButton.style.fontSize = ${currentSize * 1.5}px;
 }
-
 function handleYesClick() {
     window.location.href = "yes_page.html";
 }
-
-// Add event listeners when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    const noButton = document.querySelector('.no-button');
-    const yesButton = document.querySelector('.yes-button');
-    
-    // For desktop - move on hover
-    noButton.addEventListener('mouseenter', handleNoHover);
-    
-    // For both desktop and mobile - move on click/touch
-    noButton.addEventListener('click', handleNoClick);
-    noButton.addEventListener('touchstart', function(e) {
-        e.preventDefault();
-        handleNoClick(e);
-    });
-    
-    // Yes button click
-    yesButton.addEventListener('click', handleYesClick);
-});
